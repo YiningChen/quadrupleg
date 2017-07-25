@@ -5,14 +5,8 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import 'pixi';
-import 'p2';
-import 'phaser';
-
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
-
-// This is the entry point of your game.
 
 const config = {
   width: 800,
