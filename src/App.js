@@ -26,7 +26,7 @@ class Icon extends Component {
       <div>
         <img className='icon-placeholder' src={this.props.still}/>
         <Draggable defaultPosition={{x: 0, y: 0}} onStop={this.onStopIcon.bind(this)}>
-          <div style={{ width: '50px', height: '50px' }}>
+          <div style={{ width: this.props.dimension, height: this.props.dimension }}>
             <img src={this.state.image} style={{ width: '100%', height: '100%' }}/>
           </div>
         </Draggable>
@@ -90,6 +90,7 @@ class App extends Component {
     const { percentWidthGrid, columns, rows } = this.props
     const percentWidthTile = percentWidthGrid / columns
     const percentHeightGrid = percentWidthTile * rows
+    const dimension = `${percentWidthTile}vw`
 
     return (
       <div className='App'>
@@ -100,7 +101,7 @@ class App extends Component {
           <div className='panel' style={{width: `${percentWidthGrid}vw`}}>
             <Grid
               grid={this.state.grid}
-              dimension={percentWidthTile}
+              dimension={dimension}
               updateGrid={this.updateGrid.bind(this)}
               updateText={this.updateText.bind(this)}
             />
@@ -108,7 +109,7 @@ class App extends Component {
         </div>
         <div className='bottom-panel' style={{ height: `calc(100vh - ${percentHeightGrid}vw)` }}>
           {this.items.map((item, index) => (
-            <Icon key={index} onStopIcon={this.onStopIcon.bind(this)}  {...item}/>
+            <Icon key={index} dimension={dimension} onStopIcon={this.onStopIcon.bind(this)}  {...item}/>
           ))}
         </div>
       </div>
