@@ -1,58 +1,64 @@
 import _ from 'lodash'
-import React, { Component } from 'react';
-import DraggableMethodsContainer from './draggable-methods';
+import React, { Component } from 'react'
+import DraggableMethodsContainer from './draggable-methods'
 
 import Grid from './grid'
-import './App.css';
-
-const pos = { rowIndex: 0, colIndex: 0 }
+import './App.css'
 
 class App extends Component {
   constructor (props) {
     super(props)
+      /*
     const url = 'https://cdn.dribbble.com/users/375867/screenshots/2001532/crocodile-dragon-frog-running-and-jumping-game-character-sprite-sheets-game-asset-game-art-game-design-cartoon.jpg'
-
-    
-
-    window.setInterval
-
-
-    this.state = {
-      grid: _.range(props.rows).map((rowIndex) => (
-        _.range(props.columns).map((colIndex) => {
-          return {
+      return {
             background: null,
             actions: [],
             image: (rowIndex === 2 && colIndex === 2) && url
           }
-        })
-      ))
-    }
+      */
+    const grid = _.range(props.rows).map((rowIndex) => (
+      _.range(props.columns).map((colIndex) => 0)
+    ))
 
+    this.state = {
+      grid: grid
+    }
+  }
+
+  updateGrid (row, column, data) {
+    this.setState((state) => {
+      state.grid[row][column] = data
+    })
+  }
+
+  loopThroughGrid (method) {
+    this.state.grid.map((row, rowIndex) => (
+      row.map((item, colIndex) => {
+        method(item, rowIndex, colIndex)
+      })
+    ))
   }
 
   render () {
-    const settings = {
-      dimension: 50
-    }
+    const { percentWidthGrid, columns, rows } = this.props
+    const percentWidthTile = percentWidthGrid / columns
+    const percentHeightGrid = percentWidthTile * rows
 
     return (
-      <div className="App">
-        <div style={{ height: `${settings.dimension * this.props.rows}px` }}>
-          <div className='panel' style={{ width: `calc(100% - ${settings.dimension * this.props.columns}px)`}}>
-            Action Panel
+      <div className='App'>
+        <div style={{ height: `${percentHeightGrid}vw` }}>
+          <div className='panel' style={{width: `${100 - percentWidthGrid}vw`}}>
           </div>
-          <div className='panel'>
-            <Grid grid={this.state.grid} {...settings}/>
+          <div className='panel' style={{width: `${percentWidthGrid}vw`}}>
+            <Grid grid={this.state.grid} dimension={percentWidthTile} updateGrid={this.updateGrid.bind(this)} />
           </div>
         </div>
-        <div style={{ background: 'red', height: `calc(100vh - ${settings.dimension * this.props.rows}px)` }}>
-          Bottom Panel
+        <div style={{ background: 'black', height: `calc(100vh - ${percentHeightGrid}vw)` }}>
+          <DraggableMethodsContainer />
         </div>
-        <DraggableMethodsContainer />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
