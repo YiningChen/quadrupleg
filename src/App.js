@@ -72,7 +72,7 @@ class App extends Component {
       <div className='App'>
         <div style={{ height: `${percentHeightGrid}vw` }}>
           <div className='panel' style={{width: `${100 - percentWidthGrid}vw`}}>
-            <CodePanel text={this.state.text}/>
+            <CodePanel text={this.state.text} />
           </div>
           <div className='panel' style={{width: `${percentWidthGrid}vw`}}>
             <Grid

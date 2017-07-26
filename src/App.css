@@ -27,6 +27,10 @@ body {
   height: 50px;
 }
 
+.grid-tile.has-content {
+  border: none;
+}
+
 .code-panel {
   font-size: 22px;
   font-family: Courier;
