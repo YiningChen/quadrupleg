@@ -16,9 +16,13 @@ class DraggablePlayer extends Icon {
     return (
       <div style={style}>
         <img className='icon-placeholder' src={still} style={style} />
-        <Draggable position={position} onDrag={(event, pos) => updatePosition(pos.deltaX, pos.deltaY)} onStart={() => this.onStart()} onStop={() => {
-          this.onStop()
-        }}>
+        <Draggable
+          position={position}
+          onDrag={(event, pos) => updatePosition(pos.deltaX, pos.deltaY)}
+          onStart={() => this.onStart()}
+          onStop={() => {
+            this.onStop()
+          }}>
           <img src={this.state.image} style={{ width: '100%', height: '100%' }} />
         </Draggable>
       </div>
