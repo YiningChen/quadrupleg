@@ -25,7 +25,7 @@ class Icon extends Component {
   }
 
   render () {
-    const style = { width: '50px', height: '50px' }
+    const style = { width: this.props.dimension, height: this.props.dimension }
 
     return (
       <div style={style}>
@@ -89,6 +89,7 @@ class App extends Component {
     const { percentWidthGrid, columns, rows } = this.props
     const percentWidthTile = percentWidthGrid / columns
     const percentHeightGrid = percentWidthTile * rows
+    const dimension = `${percentWidthTile}vw`
 
     return (
       <div className='App'>
@@ -99,7 +100,7 @@ class App extends Component {
           <div className='panel' style={{width: `${percentWidthGrid}vw`}}>
             <Grid
               grid={this.state.grid}
-              dimension={percentWidthTile}
+              dimension={dimension}
               updateGrid={this.updateGrid.bind(this)}
               updateText={this.updateText.bind(this)}
             />
@@ -107,7 +108,11 @@ class App extends Component {
         </div>
         <div className='bottom-panel' style={{ height: `calc(100vh - ${percentHeightGrid}vw)` }}>
           {this.items.map((item, index) => (
+<<<<<<< HEAD
             <Icon key={index} {...item} updateText={this.updateText.bind(this)}/>
+=======
+            <Icon key={index} dimension={dimension} onStopIcon={this.onStopIcon.bind(this)}  {...item}/>
+>>>>>>> a4f0e7a5e4a11f22f445671500c53ff22db13b22
           ))}
         </div>
       </div>
