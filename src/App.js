@@ -2,9 +2,19 @@ import _ from 'lodash'
 import React, { Component } from 'react'
 import DraggableMethodsContainer from './draggable-methods'
 
+import Draggable from 'react-draggable';
+
 import Grid from './grid'
 import CodePanel from './code-panel'
 import './App.css'
+
+function Icon (props) {
+  return (
+    <Draggable defaultPosition={{x: 0, y: 0}} onStop={props.onStopIcon}>
+      <div style={{ width: '50px', height: '50px', background: 'red' }}></div>
+    </Draggable>
+  )
+}
 
 class App extends Component {
   constructor (props) {
@@ -20,6 +30,8 @@ class App extends Component {
     const grid = _.range(props.rows).map((rowIndex) => (
       _.range(props.columns).map((colIndex) => 0)
     ))
+
+    this.items = [1, 2, 3]
 
     this.state = {
       grid: grid,
@@ -47,6 +59,10 @@ class App extends Component {
     ))
   }
 
+  onStopIcon () {
+    console.log('onStopIcon')
+  }
+
   render () {
     const { percentWidthGrid, columns, rows } = this.props
     const percentWidthTile = percentWidthGrid / columns
@@ -67,8 +83,8 @@ class App extends Component {
             />
           </div>
         </div>
-        <div style={{ background: 'black', height: `calc(100vh - ${percentHeightGrid}vw)` }}>
-          <DraggableMethodsContainer />
+        <div className='bottom-panel' style={{ height: `calc(100vh - ${percentHeightGrid}vw)` }}>
+          {this.items.map((item, index) => <Icon key={index}/>)}
         </div>
       </div>
     )

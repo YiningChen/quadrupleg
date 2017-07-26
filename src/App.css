@@ -33,6 +33,17 @@ body {
   padding: 10px;
 }
 
+.bottom-panel {
+  background: black;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+.bottom-panel > div {
+  margin-left: 40px;
+}
+
 /*
 .grid-tile:nth-child(12n + 1) {
   clear: left;
