@@ -11,7 +11,7 @@ import './App.css'
 function Icon (props) {
   return (
     <Draggable defaultPosition={{x: 0, y: 0}} onStop={props.onStopIcon}>
-      <div style={{ width: '50px', height: '50px', background: 'red' }}></div>
+      <div style={{ width: props.dimension, height: props.dimension, background: 'red' }}></div>
     </Draggable>
   )
 }
@@ -67,6 +67,7 @@ class App extends Component {
     const { percentWidthGrid, columns, rows } = this.props
     const percentWidthTile = percentWidthGrid / columns
     const percentHeightGrid = percentWidthTile * rows
+    const dimension = `${percentWidthTile}vw`
 
     return (
       <div className='App'>
@@ -77,14 +78,14 @@ class App extends Component {
           <div className='panel' style={{width: `${percentWidthGrid}vw`}}>
             <Grid
               grid={this.state.grid}
-              dimension={percentWidthTile}
+              dimension={dimension}
               updateGrid={this.updateGrid.bind(this)}
               updateText={this.updateText.bind(this)}
             />
           </div>
         </div>
         <div className='bottom-panel' style={{ height: `calc(100vh - ${percentHeightGrid}vw)` }}>
-          {this.items.map((item, index) => <Icon key={index}/>)}
+          {this.items.map((item, index) => <Icon key={index} dimension={dimension} />)}
         </div>
       </div>
     )

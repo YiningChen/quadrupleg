@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 
 function Tile ({ row, column, data, dimension, image, onClick }) {
   const style = {
-    width: `${dimension}vw`,
-    height: `${dimension}vw`,
+    width: dimension,
+    height: dimension,
     'background-color': data && data.color,
     backgroundImage: data && `url(${data.image})`,
-    backgroundSize: `${dimension}vw`
+    backgroundSize: dimension
   }
 
   return (
