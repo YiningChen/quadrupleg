@@ -79,6 +79,27 @@ class App extends Component {
     }))
   }
 
+  updatePlayerPositonTowardsTouch (touchX, touchY) {
+    const increment = 10
+    let playerX = this.state.playerPosition.x
+    let playerY = this.state.playerPosition.y
+    let differenceX = touchX - playerX
+    let differenceY = touchY - playerY
+    console.log('---------')
+    console.log(playerX)
+    console.log(playerY)
+    console.log(touchX)
+    console.log(touchY)
+    console.log(differenceX)
+    console.log(differenceY)
+    if (Math.abs(differenceX) > Math.abs(differenceY)) {
+      playerX = differenceX > 0 ? playerX + increment : playerX - increment
+    } else {
+      playerY = differenceY > 0 ? playerY - increment : playerY + increment
+    }
+    this.setPlayerPosition(playerX, playerY)
+  }
+
   updateText (text) {
     this.setState((prevState) => ({
       text: prevState.text.concat(text)
@@ -123,6 +144,7 @@ class App extends Component {
             <Grid
               grid={this.state.grid}
               dimension={dimension}
+              movePlayerTowardsTouch={this.updatePlayerPositonTowardsTouch.bind(this)}
               updateGrid={this.updateGrid.bind(this)}
               updateText={this.updateText.bind(this)}
             />
