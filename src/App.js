@@ -1,42 +1,10 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import DraggableMethodsContainer from './draggable-methods'
-
-import Draggable from 'react-draggable';
 
 import Grid from './grid'
+import Icon from './icon'
 import CodePanel from './code-panel'
 import './App.css'
-
-class Icon extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      image: this.props.still
-    }
-
-    this.hasBeenAdded = false
-  }
-
-  onStopIcon () {
-    this.setState({ image: this.props.gif })
-    this.props.updateText(`${this.hasBeenAdded ? 'move' : 'add'}("${this.props.name}");`)
-    this.hasBeenAdded = true
-  }
-
-  render () {
-    const style = { width: this.props.dimension, height: this.props.dimension }
-
-    return (
-      <div style={style}>
-        <img className='icon-placeholder' src={this.props.still} style={style}/>
-        <Draggable defaultPosition={{x: 0, y: 0}} onStop={this.onStopIcon.bind(this)}>
-          <img src={this.state.image} style={{ width: '100%', height: '100%' }}/>
-        </Draggable>
-      </div>
-    )
-  }
-}
 
 class App extends Component {
   constructor (props) {
@@ -108,11 +76,7 @@ class App extends Component {
         </div>
         <div className='bottom-panel' style={{ height: `calc(100vh - ${percentHeightGrid}vw)` }}>
           {this.items.map((item, index) => (
-<<<<<<< HEAD
-            <Icon key={index} {...item} updateText={this.updateText.bind(this)}/>
-=======
-            <Icon key={index} dimension={dimension} onStopIcon={this.onStopIcon.bind(this)}  {...item}/>
->>>>>>> a4f0e7a5e4a11f22f445671500c53ff22db13b22
+            <Icon key={index} dimension={dimension} {...item} updateText={this.updateText.bind(this)}/>
           ))}
         </div>
       </div>
