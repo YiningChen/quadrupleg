@@ -25,9 +25,26 @@ class App extends Component {
       name: 'patrick',
       still: './patrick-still.png',
       gif: './patrick.gif'
+    }, {
+      name: 'poop',
+      still: './poop.png',
+      gif: './poop.png'
+    }, {
+      name: 'channing',
+      still: './channinghead.png',
+      gif: './channinghead.png'
+    }, {
+      name: 'poop',
+      still: './ghost.png',
+      gif: './ghost.png'
+    }, {
+      name: 'poop',
+      still: './alien.png',
+      gif: './alien.png'
     }]
 
     this.state = {
+      isDragging: false,
       grid: grid,
       text: []
     }
@@ -53,6 +70,14 @@ class App extends Component {
     ))
   }
 
+  onStartDrag () {
+    this.setState({ isDragging: true })
+  }
+
+  onStopDrag () {
+    this.setState({ isDragging: false })
+  }
+
   render () {
     const { percentWidthGrid, columns, rows } = this.props
     const percentWidthTile = percentWidthGrid / columns
@@ -60,7 +85,7 @@ class App extends Component {
     const dimension = `${percentWidthTile}vw`
 
     return (
-      <div className='App'>
+      <div className={'App' + (this.state.isDragging ? ' is-dragging' : '')}>
         <div style={{ height: `${percentHeightGrid}vw` }}>
           <div className='panel' style={{width: `${100 - percentWidthGrid}vw`}}>
             <CodePanel text={this.state.text} />
@@ -76,7 +101,12 @@ class App extends Component {
         </div>
         <div className='bottom-panel' style={{ height: `calc(100vh - ${percentHeightGrid}vw)` }}>
           {this.items.map((item, index) => (
-            <Icon key={index} dimension={dimension} {...item} updateText={this.updateText.bind(this)}/>
+            <Icon key={index}
+              dimension={dimension}
+              {...item}
+              onStart={this.onStartDrag.bind(this)}
+              onStop={this.onStopDrag.bind(this)}
+              updateText={this.updateText.bind(this)}/>
           ))}
         </div>
       </div>
