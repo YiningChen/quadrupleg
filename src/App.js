@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import DraggableMethodsContainer from './draggable-methods'
 
 import Grid from './grid'
+import CodePanel from './code-panel'
 import './App.css'
 
 class App extends Component {
@@ -21,8 +22,15 @@ class App extends Component {
     ))
 
     this.state = {
-      grid: grid
+      grid: grid,
+      text: []
     }
+  }
+
+  updateText (text) {
+    this.setState((prevState) => ({
+      text: prevState.text.concat(text)
+    }))
   }
 
   updateGrid (row, column, data) {
@@ -48,11 +56,15 @@ class App extends Component {
       <div className='App'>
         <div style={{ height: `${percentHeightGrid}vw` }}>
           <div className='panel' style={{width: `${100 - percentWidthGrid}vw`}}>
+            <CodePanel text={this.state.text} />
           </div>
           <div className='panel' style={{width: `${percentWidthGrid}vw`}}>
-            <Grid grid={this.state.grid} dimension={percentWidthTile} updateGrid={this.updateGrid.bind(this)}>
-              <div className='character'></div>
-            </Grid>
+            <Grid
+              grid={this.state.grid}
+              dimension={percentWidthTile}
+              updateGrid={this.updateGrid.bind(this)}
+              updateText={this.updateText.bind(this)}
+            />
           </div>
         </div>
         <div style={{ background: 'black', height: `calc(100vh - ${percentHeightGrid}vw)` }}>

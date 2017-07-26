@@ -31,6 +31,12 @@ body {
   border: none;
 }
 
+.code-panel {
+  font-size: 22px;
+  font-family: Courier;
+  padding: 10px;
+}
+
 /*
 .grid-tile:nth-child(12n + 1) {
   clear: left;
