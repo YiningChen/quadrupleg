@@ -17,6 +17,7 @@ class App extends Component {
 
     this.items = [{
       name: 'patrick',
+      audio: './patrick.mp3',
       still: './patrick-still.png',
       gif: './patrick.gif'
     }, {
@@ -25,14 +26,17 @@ class App extends Component {
       gif: './poop.png'
     }, {
       name: 'channing',
+      audio: './huh.wav',
       still: './channinghead.png',
       gif: './channinghead.png'
     }, {
       name: 'ghost',
+      audio: './ghost.mp3',
       still: './ghost.png',
       gif: './ghost.png'
     }, {
       name: 'alien',
+      audio: './laser-01.mp3',
       still: './alien.png',
       gif: './alien.png'
     }]
@@ -114,8 +118,13 @@ class App extends Component {
     }
 
     window.createjs.Sound.alternateExtensions = ['mp3']
-    window.createjs.Sound.registerSound({ src:'./pop.wav', id: 'pop' })
-    window.createjs.Sound.registerSound({ src:'./spongebob_laugh.mp3', id: 'spongebob' })
+    
+    window.createjs.Sound.registerSound({ src: './pop.wav', id: 'pop' })
+    window.createjs.Sound.registerSound({ src: './huh.wav', id: 'channing' })
+    window.createjs.Sound.registerSound({ src: './patrick.mp3', id: 'patrick' })
+    window.createjs.Sound.registerSound({ src: './ghost.mp3', id: 'ghost' })
+    window.createjs.Sound.registerSound({ src: './laser-01.mp3', id: 'alien' })
+    window.createjs.Sound.registerSound({ src: './spongebob_laugh.mp3', id: 'spongebob' })
     this.soundNotLoaded = true    
   }
 
