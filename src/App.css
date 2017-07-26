@@ -2,9 +2,18 @@
   box-sizing: border-box;
 }
 
+html, body {
+  overflow: hidden;
+}
+
 body {
-  margin: 0;
+  margin: auto;
   padding: 0;
+}
+
+.App {
+  height: 95%;
+  width: 100%;
 }
 
 .panel {
@@ -13,11 +22,13 @@ body {
 
 .grid-tile {
   float: left;
-  border: 1px solid black;
+  border: 1px solid gray;
   width: 50px;
   height: 50px;
 }
 
+/*
 .grid-tile:nth-child(12n + 1) {
   clear: left;
 }
+*/

@@ -4,6 +4,9 @@ import './index.css'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
-ReactDOM.render(<App columns={12} rows={9}/>, document.getElementById('root'))
+ReactDOM.render(<App
+  percentWidthGrid={72}
+  columns={12}
+  rows={9} />, document.getElementById('root'))
 
 registerServiceWorker()
