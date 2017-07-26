@@ -47,6 +47,11 @@ body {
 .bottom-panel > div {
   margin-left: 40px;
 }
+/* 
+.icon.is-being-dragged .icon-main-img {
+  transform: scale(1.2);
+  transition: .2s;
+} */
 
 .icon-placeholder {
   pointer-events: none;

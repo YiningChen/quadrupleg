@@ -39,6 +39,7 @@ class App extends Component {
 
     this.player = {
       name: 'spongebob',
+      audio: './spongebob-laughing.mp3',
       still: './spongebob-still.png',
       gif: './spongebob.gif'
     }
@@ -73,10 +74,6 @@ class App extends Component {
   }
 
   updateText (text) {
-    if (window.createjs) {
-      window.createjs.Sound.play('pop');
-    }
-
     this.setState((prevState) => ({
       text: prevState.text.concat(text)
     }))
@@ -104,13 +101,22 @@ class App extends Component {
     this.setState({ isDragging: false })
   }
 
+  playSoundEffect (name) {
+    if (window.createjs) {
+      console.log(name || 'pop')
+      window.createjs.Sound.play(name || 'pop');
+    }
+  }
+
   registerSound () {
     if (this.soundNotLoaded) {
       return
     }
 
+    window.createjs.Sound.alternateExtensions = ['mp3']
     window.createjs.Sound.registerSound({ src:'./pop.wav', id: 'pop' })
-    this.soundNotLoaded = true
+    window.createjs.Sound.registerSound({ src:'./spongebob_laugh.mp3', id: 'spongebob' })
+    this.soundNotLoaded = true    
   }
 
   render () {
@@ -118,7 +124,7 @@ class App extends Component {
     const percentWidthTile = percentWidthGrid / columns
     const percentHeightGrid = percentWidthTile * rows
     const dimension = `${percentWidthTile}vw`
-    window.createjs && this.registerSound()
+    window && window.createjs && this.registerSound()
 
     return (
       <div className={'App' + (this.state.isDragging ? ' is-dragging' : '')}>
@@ -144,12 +150,14 @@ class App extends Component {
             onStart={this.onStartDrag.bind(this)}
             onStop={this.onStopDrag.bind(this)}
             updateText={this.updateText.bind(this)}
+            playSoundEffect={this.playSoundEffect.bind(this)}
             {...this.player}
           />
           {this.items.map((item, index) => (
             <Icon key={index}
               dimension={dimension}
               {...item}
+              playSoundEffect={this.playSoundEffect.bind(this)}
               onStart={this.onStartDrag.bind(this)}
               onStop={this.onStopDrag.bind(this)}
               updateText={this.updateText.bind(this)}/>
