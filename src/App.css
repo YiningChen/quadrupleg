@@ -27,6 +27,10 @@ body {
   height: 50px;
 }
 
+.grid-tile.has-content {
+  border: none;
+}
+
 /*
 .grid-tile:nth-child(12n + 1) {
   clear: left;

@@ -50,7 +50,9 @@ class App extends Component {
           <div className='panel' style={{width: `${100 - percentWidthGrid}vw`}}>
           </div>
           <div className='panel' style={{width: `${percentWidthGrid}vw`}}>
-            <Grid grid={this.state.grid} dimension={percentWidthTile} updateGrid={this.updateGrid.bind(this)} />
+            <Grid grid={this.state.grid} dimension={percentWidthTile} updateGrid={this.updateGrid.bind(this)}>
+              <div className='character'></div>
+            </Grid>
           </div>
         </div>
         <div style={{ background: 'black', height: `calc(100vh - ${percentHeightGrid}vw)` }}>
