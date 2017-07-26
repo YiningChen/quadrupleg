@@ -8,12 +8,31 @@ import Grid from './grid'
 import CodePanel from './code-panel'
 import './App.css'
 
-function Icon (props) {
-  return (
-    <Draggable defaultPosition={{x: 0, y: 0}} onStop={props.onStopIcon}>
-      <div style={{ width: '50px', height: '50px', background: 'red' }}></div>
-    </Draggable>
-  )
+class Icon extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      image: this.props.still
+    }
+  }
+
+  onStopIcon () {
+    this.setState({ image: this.props.gif })
+    this.props.onStopIcon(this.props.name)
+  }
+
+  render () {
+    return (
+      <div>
+        <img className='icon-placeholder' src={this.props.still}/>
+        <Draggable defaultPosition={{x: 0, y: 0}} onStop={this.onStopIcon.bind(this)}>
+          <div style={{ width: '50px', height: '50px' }}>
+            <img src={this.state.image} style={{ width: '100%', height: '100%' }}/>
+          </div>
+        </Draggable>
+      </div>
+    )
+  }
 }
 
 class App extends Component {
@@ -31,7 +50,11 @@ class App extends Component {
       _.range(props.columns).map((colIndex) => 0)
     ))
 
-    this.items = [1, 2, 3]
+    this.items = [{
+      name: 'patrick',
+      still: './patrick-still.png',
+      gif: './patrick.gif'
+    }]
 
     this.state = {
       grid: grid,
@@ -60,9 +83,7 @@ class App extends Component {
   }
 
   onStopIcon (iconType) {
-    
-    console.log('onStopIcon')
-    this.updateText(`add("patrick")`)
+    this.updateText(`add("${iconType}");`)
   }
 
   render () {
@@ -86,7 +107,9 @@ class App extends Component {
           </div>
         </div>
         <div className='bottom-panel' style={{ height: `calc(100vh - ${percentHeightGrid}vw)` }}>
-          {this.items.map((item, index) => <Icon key={index} onStopIcon={this.onStopIcon.bind(this)}/>)}
+          {this.items.map((item, index) => (
+            <Icon key={index} onStopIcon={this.onStopIcon.bind(this)}  {...item}/>
+          ))}
         </div>
       </div>
     )

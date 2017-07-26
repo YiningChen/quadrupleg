@@ -48,6 +48,12 @@ body {
   margin-left: 40px;
 }
 
+.icon-placeholder {
+  pointer-events: none;
+  position: absolute;
+  opacity: .4;
+}
+
 /*
 .grid-tile:nth-child(12n + 1) {
   clear: left;
