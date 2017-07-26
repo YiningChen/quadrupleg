@@ -4,7 +4,7 @@ function Tile ({ row, column, data, dimension, image, onClick }) {
   const style = {
     width: `${dimension}vw`,
     height: `${dimension}vw`,
-    'background-color': data && data.color,
+    backgroundColor: data && data.color,
     backgroundImage: data && `url(${data.image})`,
     backgroundSize: `${dimension}vw`
   }
@@ -24,10 +24,7 @@ class Grid extends Component {
 
   onTouchEnd (event) {
     const len = this.changed.size
-    // this.props.updateText(`buildWall({\n\tlength: ${this.changed.size}\n})`)
-    
     this.props.updateText([`var length = ${len};`, 'buildWall(length);'])
-    // this.props.updateText(`buildWall(${JSON.stringify({length: 2}, null, 2)})`)
     this.changed.clear()
   }
 

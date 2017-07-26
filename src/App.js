@@ -59,8 +59,10 @@ class App extends Component {
     ))
   }
 
-  onStopIcon () {
+  onStopIcon (iconType) {
+    
     console.log('onStopIcon')
+    this.updateText(`add("patrick")`)
   }
 
   render () {
@@ -84,7 +86,7 @@ class App extends Component {
           </div>
         </div>
         <div className='bottom-panel' style={{ height: `calc(100vh - ${percentHeightGrid}vw)` }}>
-          {this.items.map((item, index) => <Icon key={index}/>)}
+          {this.items.map((item, index) => <Icon key={index} onStopIcon={this.onStopIcon.bind(this)}/>)}
         </div>
       </div>
     )
