@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
-import Draggable from 'react-draggable';
+import React from 'react'
+import Draggable from 'react-draggable'
+import Icon from './icon'
 
-class DraggableMethod extends Component {
-  state = {
-    x: 0,
-    y: 0
-  }
-
+class DraggablePlayer extends Icon {
   onDrag (event, pos) {
     this.setState((prevState) => ({
       x: prevState.x + pos.deltaX,
@@ -15,22 +11,18 @@ class DraggableMethod extends Component {
   }
 
   render () {
+    const { still, dimension, position, updatePosition, setPosition } = this.props
+    const style = { width: dimension, height: dimension }
     return (
-      <Draggable position={this.state} onDrag={this.onDrag.bind(this)} onStop={() => this.setState({x:0, y:0})}>
-        <div className='draggable-method'></div>
-      </Draggable>
-    )
-  }
-}
-
-class DraggableMethodsContainer extends Component {
-  render () {
-    return (
-      <div className='draggable-method-container'>
-        <DraggableMethod />
+      <div style={style}>
+        <img className='icon-placeholder' src={still} style={style} />
+        <Draggable position={position} onDrag={(event, pos) => updatePosition(pos.deltaX, pos.deltaY)} onStart={() => this.onStart()} onStop={() => {
+          this.onStop()
+        }}>
+          <img src={this.state.image} style={{ width: '100%', height: '100%' }} />
+        </Draggable>
       </div>
     )
   }
 }
-
-export default DraggableMethodsContainer
+export default DraggablePlayer
