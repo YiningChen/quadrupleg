@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
+import DraggablePlayer from './draggable-methods'
 
 import Grid from './grid'
 import Icon from './icon'
@@ -36,11 +37,39 @@ class App extends Component {
       gif: './alien.png'
     }]
 
+    this.player = {
+      name: 'spongebob',
+      still: './spongebob-still.png',
+      gif: './spongebob.gif'
+    }
+
     this.state = {
       isDragging: false,
       grid: grid,
+      playerPosition: {
+        x: 0,
+        y: 0
+      },
       text: []
     }
+  }
+
+  updatePlayerPosition (relativeX, relativeY) {
+    this.setState(({ playerPosition }) => ({
+      playerPosition: {
+        x: playerPosition.x + relativeX,
+        y: playerPosition.y + relativeY
+      }
+    }))
+  }
+
+  setPlayerPosition (x, y) {
+    this.setState(({ playerPosition }) => ({
+      playerPosition: {
+        x: x,
+        y: y
+      }
+    }))
   }
 
   updateText (text) {
@@ -107,6 +136,16 @@ class App extends Component {
           </div>
         </div>
         <div className='bottom-panel' style={{ height: `calc(100vh - ${percentHeightGrid}vw)` }}>
+          <DraggablePlayer
+            dimension={dimension}
+            position={this.state.playerPosition}
+            updatePosition={this.updatePlayerPosition.bind(this)}
+            setPosition={this.setPlayerPosition.bind(this)}
+            onStart={this.onStartDrag.bind(this)}
+            onStop={this.onStopDrag.bind(this)}
+            updateText={this.updateText.bind(this)}
+            {...this.player}
+          />
           {this.items.map((item, index) => (
             <Icon key={index}
               dimension={dimension}
