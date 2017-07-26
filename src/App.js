@@ -14,21 +14,24 @@ class Icon extends Component {
     this.state = {
       image: this.props.still
     }
+
+    this.hasBeenAdded = false
   }
 
   onStopIcon () {
     this.setState({ image: this.props.gif })
-    this.props.onStopIcon(this.props.name)
+    this.props.updateText(`${this.hasBeenAdded ? 'move' : 'add'}("${this.props.name}");`)
+    this.hasBeenAdded = true
   }
 
   render () {
+    const style = { width: '50px', height: '50px' }
+
     return (
-      <div>
-        <img className='icon-placeholder' src={this.props.still}/>
+      <div style={style}>
+        <img className='icon-placeholder' src={this.props.still} style={style}/>
         <Draggable defaultPosition={{x: 0, y: 0}} onStop={this.onStopIcon.bind(this)}>
-          <div style={{ width: '50px', height: '50px' }}>
-            <img src={this.state.image} style={{ width: '100%', height: '100%' }}/>
-          </div>
+          <img src={this.state.image} style={{ width: '100%', height: '100%' }}/>
         </Draggable>
       </div>
     )
@@ -82,10 +85,6 @@ class App extends Component {
     ))
   }
 
-  onStopIcon (iconType) {
-    this.updateText(`add("${iconType}");`)
-  }
-
   render () {
     const { percentWidthGrid, columns, rows } = this.props
     const percentWidthTile = percentWidthGrid / columns
@@ -108,7 +107,7 @@ class App extends Component {
         </div>
         <div className='bottom-panel' style={{ height: `calc(100vh - ${percentHeightGrid}vw)` }}>
           {this.items.map((item, index) => (
-            <Icon key={index} onStopIcon={this.onStopIcon.bind(this)}  {...item}/>
+            <Icon key={index} {...item} updateText={this.updateText.bind(this)}/>
           ))}
         </div>
       </div>
