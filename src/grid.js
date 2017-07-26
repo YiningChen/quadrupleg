@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
 
-function Tile ({ row, column, data, dimension, image, onClick }) {
+function Tile ({ row, column, data, dimension, image, onClick, className }) {
   const style = {
     width: dimension,
     height: dimension,
-    backgroundColor: data && data.color,
     backgroundImage: data && `url(${data.image})`,
     backgroundSize: dimension
   }
 
+  className = `grid-tile ${data ? 'has-content' : ''} ${className}`
+
   return (
-    <div className={`grid-tile ${data ? 'has-content' : ''}`} data-col={column} data-row={row} style={style}>
+    <div className={className} data-col={column} data-row={row} style={style}>
     </div>
   )
 }
+
+const isOdd = (num) => !!(num % 2)
 
 class Grid extends Component {
 
@@ -47,6 +50,13 @@ class Grid extends Component {
       <div className='grid' onTouchMove={this.onTouchMove.bind(this)} onTouchEnd={this.onTouchEnd.bind(this)}>
         {this.props.grid.map((row, rowIndex) => (
           row.map((item, colIndex) => {
+            let iconClassName
+            if (isOdd(rowIndex)) {
+              iconClassName = isOdd(colIndex) ? 'grid-color1' : 'grid-color2'
+            } else {
+              iconClassName = !isOdd(colIndex) ? 'grid-color1' : 'grid-color2'
+            }
+
             return <Tile
               key={`${rowIndex},${colIndex}`}
               row={rowIndex}
@@ -54,7 +64,9 @@ class Grid extends Component {
               data={this.props.grid[rowIndex][colIndex]}
               dimension={this.props.dimension}
               image={item.image}
-              onClick={this.props.updateGrid} />
+              onClick={this.props.updateGrid}
+              className={iconClassName}
+            />
           })
         ))}
       </div>

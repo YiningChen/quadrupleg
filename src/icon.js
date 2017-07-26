@@ -5,7 +5,8 @@ class Icon extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      image: this.props.still
+      image: this.props.still,
+      isBeingDragged: false
     }
 
     this.hasBeenAdded = false
@@ -13,11 +14,12 @@ class Icon extends Component {
 
   onStart () {
     this.props.onStart()
+    this.setState({ isBeingDragged: true })
   }
 
   onStop () {
     this.props.onStop()
-    this.setState({ image: this.props.gif })
+    this.setState({ image: this.props.gif, isBeingDragged: false })
     this.props.updateText(`${this.hasBeenAdded ? 'move' : 'add'}("${this.props.name}");`)
     this.hasBeenAdded = true
   }
@@ -26,7 +28,7 @@ class Icon extends Component {
     const style = { width: this.props.dimension, height: this.props.dimension }
 
     return (
-      <div className='icon' style={style}>
+      <div className={'icon' + this.state.isBeingDragged ? ' is-being-dragged' : ''} style={style}>
         <img className='icon-placeholder' src={this.props.still} style={style}/>
         <Draggable defaultPosition={{x: 0, y: 0}}
           onStart={this.onStart.bind(this)}

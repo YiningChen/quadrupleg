@@ -22,7 +22,6 @@ body {
 
 .grid-tile {
   float: left;
-  border: 1px solid gray;
   width: 50px;
   height: 50px;
 }
@@ -32,6 +31,7 @@ body {
 }
 
 .code-panel {
+  height: 100%;
   font-size: 22px;
   font-family: Courier;
   padding: 10px;
@@ -51,7 +51,20 @@ body {
 .icon-placeholder {
   pointer-events: none;
   position: absolute;
-  opacity: .4;
+  opacity: 1;
+}
+
+.grid-color1 {
+  background-color: rgba(0, 96, 178, .2);
+}
+
+.grid-color2 {
+  background-color: rgba(76, 172, 255, .2);
+}
+
+.code-text-caret {
+  color: green;
+  font-weight: 800;
 }
 
 /*

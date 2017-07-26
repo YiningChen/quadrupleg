@@ -9,15 +9,8 @@ import './App.css'
 class App extends Component {
   constructor (props) {
     super(props)
-      /*
-    const url = 'https://cdn.dribbble.com/users/375867/screenshots/2001532/crocodile-dragon-frog-running-and-jumping-game-character-sprite-sheets-game-asset-game-art-game-design-cartoon.jpg'
-      return {
-            background: null,
-            actions: [],
-            image: (rowIndex === 2 && colIndex === 2) && url
-          }
-      */
-    const grid = _.range(props.rows).map((rowIndex) => (
+
+      const grid = _.range(props.rows).map((rowIndex) => (
       _.range(props.columns).map((colIndex) => 0)
     ))
 
@@ -34,11 +27,11 @@ class App extends Component {
       still: './channinghead.png',
       gif: './channinghead.png'
     }, {
-      name: 'poop',
+      name: 'ghost',
       still: './ghost.png',
       gif: './ghost.png'
     }, {
-      name: 'poop',
+      name: 'alien',
       still: './alien.png',
       gif: './alien.png'
     }]
@@ -51,6 +44,10 @@ class App extends Component {
   }
 
   updateText (text) {
+    if (window.createjs) {
+      window.createjs.Sound.play('pop');
+    }
+
     this.setState((prevState) => ({
       text: prevState.text.concat(text)
     }))
@@ -78,16 +75,26 @@ class App extends Component {
     this.setState({ isDragging: false })
   }
 
+  registerSound () {
+    if (this.soundNotLoaded) {
+      return
+    }
+
+    window.createjs.Sound.registerSound({ src:'./pop.wav', id: 'pop' })
+    this.soundNotLoaded = true
+  }
+
   render () {
     const { percentWidthGrid, columns, rows } = this.props
     const percentWidthTile = percentWidthGrid / columns
     const percentHeightGrid = percentWidthTile * rows
     const dimension = `${percentWidthTile}vw`
+    window.createjs && this.registerSound()
 
     return (
       <div className={'App' + (this.state.isDragging ? ' is-dragging' : '')}>
         <div style={{ height: `${percentHeightGrid}vw` }}>
-          <div className='panel' style={{width: `${100 - percentWidthGrid}vw`}}>
+          <div className='panel' style={{width: `${100 - percentWidthGrid}vw`, height: '100%', background: '#f9f9f9'}}>
             <CodePanel text={this.state.text} />
           </div>
           <div className='panel' style={{width: `${percentWidthGrid}vw`}}>
