@@ -22,10 +22,17 @@ class Grid extends Component {
     this.changed = new Set()
   }
 
+  onTouchStart (event) {
+    const touch = event.touches && event.touches[event.touches.length - 1]
+    console.warn(touch)
+  }
+
   onTouchEnd (event) {
     const len = this.changed.size
-    this.props.updateText([`var length = ${len};`, 'buildWall(length);'])
     this.changed.clear()
+    if (len) {
+      this.props.updateText([`var length = ${len};`, 'buildWall(length);'])
+    }
   }
 
   onTouchMove (event) {
@@ -44,7 +51,7 @@ class Grid extends Component {
 
   render () {
     return (
-      <div className='grid' onTouchMove={this.onTouchMove.bind(this)} onTouchEnd={this.onTouchEnd.bind(this)}>
+      <div className='grid' onTouchStart={this.onTouchStart} onTouchMove={this.onTouchMove.bind(this)} onTouchEnd={this.onTouchEnd.bind(this)}>
         {this.props.grid.map((row, rowIndex) => (
           row.map((item, colIndex) => {
             return <Tile
