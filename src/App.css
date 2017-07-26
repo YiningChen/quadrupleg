@@ -56,7 +56,7 @@ body {
 .icon-placeholder {
   pointer-events: none;
   position: absolute;
-  opacity: 1;
+  opacity: .4;
 }
 
 .grid-color1 {
